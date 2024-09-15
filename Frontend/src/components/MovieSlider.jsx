@@ -19,7 +19,7 @@ const MovieSlider = ({ category }) => {
 
 	useEffect(() => {
 		const getContent = async () => {
-			const res = await axios.get(`${host}/api/v1/${contentType}/${category}`,{withCredentials:true});
+			const res = await axios.get(`${host}/api/v1/${contentType}/${category}`,{Headers:"Access-Control-Allow-Origin: *"},{withCredentials:true});
 			setContent(res.data.content);
 			// console.log(category)
 		};
