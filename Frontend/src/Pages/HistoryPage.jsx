@@ -29,7 +29,7 @@ const SearchHistoryPage = () => {
 	useEffect(() => {
 		const getSearchHistory = async () => {
 			try {
-				const res = await axios.get(`http://localhost:5000/api/v1/search/history`,{withCredentials:true});
+				const res = await axios.get(`http://localhost:5000/api/v1/search/history`,{Headers:"Access-Control-Allow-Origin: *"},{withCredentials:true});
 				setSearchHistory(res.data.content);
 			} catch (error) {
 				setSearchHistory([]);
@@ -41,7 +41,7 @@ const SearchHistoryPage = () => {
 
 	const handleDelete = async (entry) => {
 		try {
-			await axios.delete(`http://localhost:5000/api/v1/search/history/${entry.id}`,{ withCredentials:true});
+			await axios.delete(`http://localhost:5000/api/v1/search/history/${entry.id}`,{Headers:"Access-Control-Allow-Origin: *"},{ withCredentials:true});
 
 			setSearchHistory(searchHistory.filter((item) => item.id !== entry.id));
 		} catch (error) {
