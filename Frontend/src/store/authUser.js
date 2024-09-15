@@ -13,7 +13,7 @@ export const useAuthStore = create((set) =>
     signup: async (credentials) => {
         set({ isSigningUp: true });
 		try {
-            const response = await axios.post(`http://localhost:5000/api/v1/auth/signup`, credentials,{withCredentials:true});
+            const response = await axios.post(`http://localhost:5000/api/v1/auth/signup`, credentials,{Headers:"Access-Control-Allow-Origin: *"},{withCredentials:true});
 			set({ user: response.data.user, isSigningUp: false });
 			toast.success("Account created successfully");
 		} catch (error) {
@@ -24,7 +24,7 @@ export const useAuthStore = create((set) =>
     login: async (credentials) => {
         set({ isLoggingIn: true });
         try {
-            const response = await axios.post(`http://localhost:5000/api/v1/auth/login`,credentials, {withCredentials:true})
+            const response = await axios.post(`http://localhost:5000/api/v1/auth/login`,credentials,{Headers:"Access-Control-Allow-Origin: *"}, {withCredentials:true})
             set( { user: response.data.user, isLoggingIn: false });
             toast.success("Logged in successfully");
         } catch (error) {
@@ -46,7 +46,7 @@ export const useAuthStore = create((set) =>
     authCheck: async () => {
         set({ isCheckingAuth: true });
         try {
-            const response = await axios.get(`http://localhost:5000/api/v1/auth/authCheck`,{withCredentials:true})   
+            const response = await axios.get(`http://localhost:5000/api/v1/auth/authCheck`,{Headers:"Access-Control-Allow-Origin: *"},{withCredentials:true})   
             set({ user: response.data.user ,isCheckingAuth: false }); 
         } catch (error) {
             set({ isCheckingAuth: false, user: null }); 
