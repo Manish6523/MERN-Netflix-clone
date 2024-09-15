@@ -24,7 +24,7 @@ const WatchPage = () => {
 	useEffect(() => {
 		const getTrailers = async () => {
 			try {
-				const res = await axios.get(`${host}/api/v1/${contentType}/${id}/trailers`,{withCredentials:true});
+				const res = await axios.get(`${host}/api/v1/${contentType}/${id}/trailers`,{Headers:"Access-Control-Allow-Origin: *"},{withCredentials:true});
 				setTrailers(res.data.trailers);
 			} catch (error) {
 				if (error.message.includes("404")) {

@@ -26,7 +26,7 @@ const SearchPage = () => {
 	const handleSearch = async (e) => {
 		e.preventDefault();
 		try {
-			const res = await axios.get(`${host}/api/v1/search/${activeTab}/${searchTerm}`,{withCredentials:true});
+			const res = await axios.get(`${host}/api/v1/search/${activeTab}/${searchTerm}`,{Headers:"Access-Control-Allow-Origin: *"},{withCredentials:true});
 			setResults(res.data.content);
 		} catch (error) {
 			if (error.response.status === 404) {
