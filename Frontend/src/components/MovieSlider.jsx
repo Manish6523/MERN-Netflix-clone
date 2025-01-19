@@ -3,8 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useContentStore } from "../store/useContentStore";
-import { SMALL_IMAGE_PATH } from "../utils/constants";
-import { config } from "../utils/config";
+import { SMALL_IMAGE_PATH, config } from "../utils/constants";
 
 const MovieSlider = ({ category }) => {
 	const host = 'http://localhost:5000'
