@@ -1,7 +1,7 @@
 import express from 'express'
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-import path  from 'path';
+import path from 'path';
 
 
 import authRoutes from './routes/auth.route.js'
@@ -16,7 +16,9 @@ import { protectRoute } from './middleware/protectRoute.js';
 const app = express();
 
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: ["*", 'http://localhost:5000'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allowed methods
+    allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
     credentials: true
 }))
 app.use(express.json());
@@ -25,20 +27,20 @@ app.use(cookieParser())
 const PORT = ENV_VARS.PORT
 const __dirname = path.resolve();
 
-app.use('/api/v1/auth',authRoutes)
-app.use('/api/v1/movie', protectRoute,movieRoutes)
-app.use('/api/v1/tv', protectRoute,tvRoutes)
-app.use('/api/v1/search', protectRoute,searchRoutes)
+app.use('/api/v1/auth', authRoutes)
+app.use('/api/v1/movie', protectRoute, movieRoutes)
+app.use('/api/v1/tv', protectRoute, tvRoutes)
+app.use('/api/v1/search', protectRoute, searchRoutes)
 
-if(ENV_VARS.NODE_ENV === 'production'){
-    app.use(express.static(path.join(__dirname,'/Frontend/dist')));
-    app.get('*',( req,res)=>{
-        res.sendFile(path.resolve(__dirname,'Frontend','dist','index.html'));
+if (ENV_VARS.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, '/Frontend/dist')));
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname, 'Frontend', 'dist', 'index.html'));
     })
 }
 
-app.listen(PORT,()=>{
-    console.log('Server started at http://localhost:'+PORT)
+app.listen(PORT, () => {
+    console.log('Server started at http://localhost:' + PORT)
     connectDB()
 });
 
