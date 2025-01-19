@@ -4,9 +4,10 @@ import { Link } from "react-router-dom";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useContentStore } from "../store/useContentStore";
 import { SMALL_IMAGE_PATH } from "../utils/constants";
+import { config } from "../utils/config";
 
 const MovieSlider = ({ category }) => {
-    const host = 'http://localhost:5000'
+	const host = 'http://localhost:5000'
 	const { contentType } = useContentStore();
 	const [content, setContent] = useState([]);
 	const [showArrows, setShowArrows] = useState(false);
@@ -19,7 +20,7 @@ const MovieSlider = ({ category }) => {
 
 	useEffect(() => {
 		const getContent = async () => {
-			const res = await axios.get(`${host}/api/v1/${contentType}/${category}`,{withCredentials:true});
+			const res = await axios.get(`${host}/api/v1/${contentType}/${category}`, {}, config);
 			setContent(res.data.content);
 			// console.log(category)
 		};

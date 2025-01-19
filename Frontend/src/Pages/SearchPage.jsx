@@ -6,8 +6,9 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import { LARGE_IMAGE_PATH } from "../utils/constants";
 import { Link } from "react-router-dom";
+import { config } from "../utils/constants";
 
-const host = ' http://localhost:5000'; 
+const host = ' http://localhost:5000';
 
 
 const SearchPage = () => {
@@ -26,7 +27,7 @@ const SearchPage = () => {
 	const handleSearch = async (e) => {
 		e.preventDefault();
 		try {
-			const res = await axios.get(`${host}/api/v1/search/${activeTab}/${searchTerm}`,{Headers:"Access-Control-Allow-Origin: *"},{withCredentials:true});
+			const res = await axios.get(`${host}/api/v1/search/${activeTab}/${searchTerm}`, {}, config);
 			setResults(res.data.content);
 		} catch (error) {
 			if (error.response.status === 404) {
@@ -43,25 +44,22 @@ const SearchPage = () => {
 			<div className='container mx-auto px-4 py-8'>
 				<div className='flex justify-center gap-3 mb-4'>
 					<button
-						className={`py-2 px-4 rounded ${
-							activeTab === "movie" ? "bg-red-600" : "bg-gray-800"
-						} hover:bg-red-700`}
+						className={`py-2 px-4 rounded ${activeTab === "movie" ? "bg-red-600" : "bg-gray-800"
+							} hover:bg-red-700`}
 						onClick={() => handleTabClick("movie")}
 					>
 						Movies
 					</button>
 					<button
-						className={`py-2 px-4 rounded ${
-							activeTab === "tv" ? "bg-red-600" : "bg-gray-800"
-						} hover:bg-red-700`}
+						className={`py-2 px-4 rounded ${activeTab === "tv" ? "bg-red-600" : "bg-gray-800"
+							} hover:bg-red-700`}
 						onClick={() => handleTabClick("tv")}
 					>
 						TV Shows
 					</button>
 					<button
-						className={`py-2 px-4 rounded ${
-							activeTab === "person" ? "bg-red-600" : "bg-gray-800"
-						} hover:bg-red-700`}
+						className={`py-2 px-4 rounded ${activeTab === "person" ? "bg-red-600" : "bg-gray-800"
+							} hover:bg-red-700`}
 						onClick={() => handleTabClick("person")}
 					>
 						Person

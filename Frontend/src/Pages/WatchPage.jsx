@@ -6,11 +6,11 @@ import Navbar from "../components/Navbar";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import ReactPlayer from "react-player";
 import { formatReleaseDate } from "../utils/dateFunction";
-import { LARGE_IMAGE_PATH, SMALL_IMAGE_PATH } from "../utils/constants.js";
+import { LARGE_IMAGE_PATH, SMALL_IMAGE_PATH, config } from "../utils/constants.js";
 import WatchPageSkeleton from "../components/skeletons/WatchPageSkeleton .jsx";
 
 const WatchPage = () => {
-    const host ='http://localhost:5000'
+	const host = 'http://localhost:5000'
 	const { id } = useParams();
 	const [trailers, setTrailers] = useState([]);
 	const [currentTrailerIdx, setCurrentTrailerIdx] = useState(0);
@@ -24,7 +24,7 @@ const WatchPage = () => {
 	useEffect(() => {
 		const getTrailers = async () => {
 			try {
-				const res = await axios.get(`${host}/api/v1/${contentType}/${id}/trailers`,{Headers:"Access-Control-Allow-Origin: *"},{withCredentials:true});
+				const res = await axios.get(`${host}/api/v1/${contentType}/${id}/trailers`, {}, config);
 				setTrailers(res.data.trailers);
 			} catch (error) {
 				if (error.message.includes("404")) {
@@ -39,7 +39,7 @@ const WatchPage = () => {
 	useEffect(() => {
 		const getSimilarContent = async () => {
 			try {
-				const res = await axios.get(`${host}/api/v1/${contentType}/${id}/similar`,{withCredentials:true});
+				const res = await axios.get(`${host}/api/v1/${contentType}/${id}/similar`, {}, config);
 				setSimilarContent(res.data.similar);
 			} catch (error) {
 				if (error.message.includes("404")) {
@@ -54,7 +54,7 @@ const WatchPage = () => {
 	useEffect(() => {
 		const getContentDetails = async () => {
 			try {
-				const res = await axios.get(`${host}/api/v1/${contentType}/${id}/details`,{withCredentials:true});
+				const res = await axios.get(`${host}/api/v1/${contentType}/${id}/details`, {}, config);
 				setContent(res.data.content);
 			} catch (error) {
 				if (error.message.includes("404")) {
@@ -67,9 +67,9 @@ const WatchPage = () => {
 
 		getContentDetails();
 	}, [contentType, id]);
-    // console.log(" content", content);
-    // console.log(" trailers", trailers);
-    // console.log("  similar", similarContent);
+	// console.log(" content", content);
+	// console.log(" trailers", trailers);
+	// console.log("  similar", similarContent);
 
 
 
@@ -117,9 +117,8 @@ const WatchPage = () => {
 					<div className='flex justify-between items-center mb-4 mt-5'>
 						<button
 							className={`
-							bg-gray-500/70 hover:bg-gray-500 text-white py-2 px-4 rounded ${
-								currentTrailerIdx === 0 ? "opacity-50 cursor-not-allowed " : ""
-							}}
+							bg-gray-500/70 hover:bg-gray-500 text-white py-2 px-4 rounded ${currentTrailerIdx === 0 ? "opacity-50 cursor-not-allowed " : ""
+								}}
 							`}
 							disabled={currentTrailerIdx === 0}
 							onClick={handlePrev}
@@ -129,9 +128,8 @@ const WatchPage = () => {
 
 						<button
 							className={`
-							bg-gray-500/70 hover:bg-gray-500 text-white py-2 px-4 rounded ${
-								currentTrailerIdx === trailers.length - 1 ? "opacity-50 cursor-not-allowed " : ""
-							}}
+							bg-gray-500/70 hover:bg-gray-500 text-white py-2 px-4 rounded ${currentTrailerIdx === trailers.length - 1 ? "opacity-50 cursor-not-allowed " : ""
+								}}
 							`}
 							disabled={currentTrailerIdx === trailers.length - 1}
 							onClick={handleNext}

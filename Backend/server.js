@@ -14,13 +14,13 @@ import { connectDB } from './config/db.js';
 import { protectRoute } from './middleware/protectRoute.js';
 
 const app = express();
-
 app.use(cors({
-    origin: ["*", 'http://localhost:5000'],
+    origin: ["*", 'http://localhost:5173', "https://netflix-clone-b9rj.onrender.com", 'http://localhost:5000'],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allowed methods
     allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
     credentials: true
 }))
+app.options('*', cors());
 app.use(express.json());
 app.use(cookieParser())
 

@@ -1,13 +1,14 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
-import { SMALL_IMAGE_PATH} from "../utils/constants.js";
+import { SMALL_IMAGE_PATH } from "../utils/constants.js";
 import { Trash } from "lucide-react";
 import toast from "react-hot-toast";
+import { config } from "../utils/constants.js";
 
 function formatDate(dateString) {
 
-    const host = "http://localhost:5000"
+	const host = "http://localhost:5000"
 
 	// Create a Date object from the input date string
 	const date = new Date(dateString);
@@ -29,7 +30,7 @@ const SearchHistoryPage = () => {
 	useEffect(() => {
 		const getSearchHistory = async () => {
 			try {
-				const res = await axios.get(`http://localhost:5000/api/v1/search/history`,{Headers:"Access-Control-Allow-Origin: *"},{withCredentials:true});
+				const res = await axios.get(`http://localhost:5000/api/v1/search/history`, {}, config);
 				setSearchHistory(res.data.content);
 			} catch (error) {
 				setSearchHistory([]);
@@ -37,11 +38,11 @@ const SearchHistoryPage = () => {
 		};
 		getSearchHistory();
 	}, []);
-// console.log(" searchHistory",searchHistory);
+	// console.log(" searchHistory",searchHistory);
 
 	const handleDelete = async (entry) => {
 		try {
-			await axios.delete(`http://localhost:5000/api/v1/search/history/${entry.id}`,{ withCredentials:true});
+			await axios.delete(`http://localhost:5000/api/v1/search/history/${entry.id}`, {}, config);
 
 			setSearchHistory(searchHistory.filter((item) => item.id !== entry.id));
 		} catch (error) {
@@ -73,24 +74,23 @@ const SearchHistoryPage = () => {
 					{searchHistory?.map((entry) => (
 						<div key={entry.id} className='bg-gray-800 p-4 rounded flex items-start'>
 							<img
-								src={SMALL_IMAGE_PATH+ entry.image}
+								src={SMALL_IMAGE_PATH + entry.image}
 								alt='History image'
 								className='size-16 rounded-full object-cover mr-4'
 							/>
 							<div className='flex flex-col'>
 								<span className='text-white text-lg'>{entry.title}</span>
-                                {/* <div className="bg-green-500">{entry.image}</div> */}
+								{/* <div className="bg-green-500">{entry.image}</div> */}
 								<span className='text-gray-400 text-sm'>{formatDate(entry.createdAt)}</span>
 							</div>
 
 							<span
-								className={`py-1 px-3 min-w-20 text-center rounded-full text-sm  ml-auto ${
-									entry.searchType === "movie"
-										? "bg-red-600"
-										: entry.searchType === "tv"
+								className={`py-1 px-3 min-w-20 text-center rounded-full text-sm  ml-auto ${entry.searchType === "movie"
+									? "bg-red-600"
+									: entry.searchType === "tv"
 										? "bg-blue-600"
 										: "bg-green-600"
-								}`}
+									}`}
 							>
 								{entry.searchType[0].toUpperCase() + entry.searchType.slice(1)}
 							</span>
